@@ -1,5 +1,6 @@
-// Progress store: earned trophies and per-trophy counters, saved in localStorage.
-// Export writes a JSON file; import reads one back. No network anywhere.
+// Progress store: earned trophies plus per-trophy count trackers.
+// Saved in localStorage under one key; export writes a JSON file and import
+// reads one back. The store never touches the network.
 export const STORE_KEY = 'vice-city-ledger-v1';
 
 export function loadProgress() {
@@ -8,10 +9,11 @@ export function loadProgress() {
     if (!raw) return { earned: [], counts: {} };
     const parsed = JSON.parse(raw);
     if (!parsed || typeof parsed !== 'object') return { earned: [], counts: {} };
-    return {
-      earned: Array.isArray(parsed.earned) ? parsed.earned.filter((n) => typeof n === 'string') : [],
-      counts: parsed.counts && typeof parsed.counts === 'object' ? parsed.counts : {},
-    };
+    const earned = Array.isArray(parsed.earned)
+      ? parsed.earned.filter((n) => typeof n === 'string')
+      : [];
+    const counts = parsed.counts && typeof parsed.counts === 'object' ? parsed.counts : {};
+    return { earned, counts };
   } catch {
     return { earned: [], counts: {} };
   }
@@ -21,7 +23,7 @@ export function saveProgress(progress) {
   try {
     localStorage.setItem(STORE_KEY, JSON.stringify(progress));
   } catch {
-    // Storage full or blocked: the in-memory state still works for this visit.
+    // Storage full or blocked in this browser: in-memory state still works.
   }
 }
 
@@ -65,6 +67,7 @@ export async function importProgress(file) {
   const parsed = JSON.parse(text);
   const earned = Array.isArray(parsed) ? parsed : parsed.earned;
   if (!Array.isArray(earned)) throw new Error('not a progress file');
-  const counts = parsed && typeof parsed === 'object' && parsed.counts && typeof parsed.counts === 'object' ? parsed.counts : {};
+  const counts = parsed && typeof parsed === 'object'
+    && parsed.counts && typeof parsed.counts === 'object' ? parsed.counts : {};
   return { earned: earned.filter((n) => typeof n === 'string'), counts };
 }

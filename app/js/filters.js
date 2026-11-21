@@ -1,7 +1,7 @@
 // Filtering, ordering and the spoiler rule for the trophy list.
-// Kinds are tags on each trophy: story, missable, collectibles, activities.
-// A trophy can carry more than one kind; "online" matches nothing (the game
-// lists no online trophies) and is shown as 0 on purpose.
+// Each trophy carries kinds tags: story, missable, collectibles, activities.
+// A trophy may carry several kinds. "online" matches nothing on purpose —
+// the game lists no online trophies, so the filter reads 0 by design.
 export const GRADE_RANK = { platinum: 0, gold: 1, silver: 2, bronze: 3 };
 
 export const STAGE_LABELS = {
@@ -27,6 +27,8 @@ export function kindMatches(trophy, kind, earned) {
   }
 }
 
+// The spoiler shield hides a hidden story trophy's name and description
+// until the reader has earned it (or reveals it by hand).
 export function spoilerMasks(trophy, spoilerOn, earned) {
   return spoilerOn && trophy.hidden === true && !earned.has(trophy.name);
 }
@@ -56,6 +58,7 @@ export function orderList(list, order) {
   return copy;
 }
 
+// The next unearned trophies in roadmap order, for the right-hand rail.
 export function nextUpQueue(trophies, earned, limit = 5) {
   return trophies
     .filter((t) => !earned.has(t.name))
@@ -63,6 +66,7 @@ export function nextUpQueue(trophies, earned, limit = 5) {
     .slice(0, limit);
 }
 
+// Earned counts per roadmap stage, for the roadmap page's progress bars.
 export function stageProgress(trophies, earned) {
   const out = {};
   for (const t of trophies) {

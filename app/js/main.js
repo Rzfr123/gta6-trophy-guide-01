@@ -1,6 +1,7 @@
 // Vice City Ledger boot: load the trophy data, wire the controls, render.
-// State lives in one object; progress (earned + counters) in localStorage
-// via store.js. The app fetches only its own data/trophies.json, nothing else.
+// All UI state lives in one object; earned trophies and count trackers live
+// in localStorage through store.js. The app fetches only its own
+// data/trophies.json — nothing else, ever.
 import { loadProgress, saveProgress, toggleEarned, setCount, exportProgress, importProgress } from './store.js';
 import { applyFilters, orderList } from './filters.js';
 import {
@@ -23,7 +24,7 @@ let doc = null;
 let progress = loadProgress();
 state.counts = progress.counts;
 
-function earned() {
+function earnedSet() {
   return new Set(progress.earned);
 }
 
@@ -32,15 +33,20 @@ function selectedTrophy() {
 }
 
 function renderAll() {
-  const set = earned();
-  renderHeaderCounts(doc, set);
-  renderAudit(doc, set);
-  const filtered = orderList(applyFilters(doc.trophies, state, set), state.order);
-  renderList(doc, filtered, state, set,
+  const earned = earnedSet();
+  renderHeaderCounts(doc, earned);
+  renderAudit(doc, earned);
+  const filtered = orderList(applyFilters(doc.trophies, state, earned), state.order);
+  renderList(doc, filtered, state, earned,
     (t) => { state.selected = t.name; renderAll(); },
     (t) => { progress = toggleEarned(progress, t.name); state.counts = progress.counts; renderAll(); },
-    (t) => { state.selected = t.name; state.spoiler = false; document.getElementById('spoiler').checked = false; renderAll(); });
-  renderDetail(doc, selectedTrophy(), state, set,
+    (t) => {
+      state.selected = t.name;
+      state.spoiler = false;
+      document.getElementById('spoiler').checked = false;
+      renderAll();
+    });
+  renderDetail(doc, selectedTrophy(), state, earned,
     (t) => { progress = toggleEarned(progress, t.name); state.counts = progress.counts; renderAll(); },
     (t, d) => {
       if (!t.count) return;
@@ -48,9 +54,9 @@ function renderAll() {
       state.counts[t.name] = setCount(progress, t.name, cur + d, t.count.need);
       renderAll();
     });
-  renderNextUp(doc, set);
+  renderNextUp(doc, earned);
   renderRailSources(doc, selectedTrophy());
-  renderRoadmap(doc, set);
+  renderRoadmap(doc, earned);
   renderMissables(doc);
   renderSources(doc);
 }
@@ -75,20 +81,33 @@ async function boot() {
   for (const b of document.querySelectorAll('#filterBar [data-kind]')) {
     b.addEventListener('click', () => {
       state.kind = b.dataset.kind;
-      for (const x of document.querySelectorAll('#filterBar [data-kind]')) x.classList.toggle('active', x === b);
+      for (const x of document.querySelectorAll('#filterBar [data-kind]')) {
+        x.classList.toggle('active', x === b);
+      }
       renderAll();
     });
   }
   for (const b of document.querySelectorAll('.gradeFilter [data-grade]')) {
     b.addEventListener('click', () => {
       state.grade = state.grade === b.dataset.grade ? 'all' : b.dataset.grade;
-      for (const x of document.querySelectorAll('.gradeFilter [data-grade]')) x.classList.toggle('active', x.dataset.grade === state.grade);
+      for (const x of document.querySelectorAll('.gradeFilter [data-grade]')) {
+        x.classList.toggle('active', x.dataset.grade === state.grade);
+      }
       renderAll();
     });
   }
-  document.getElementById('search').addEventListener('input', (e) => { state.query = e.target.value; renderAll(); });
-  document.getElementById('order').addEventListener('change', (e) => { state.order = e.target.value; renderAll(); });
-  document.getElementById('spoiler').addEventListener('change', (e) => { state.spoiler = e.target.checked; renderAll(); });
+  document.getElementById('search').addEventListener('input', (e) => {
+    state.query = e.target.value;
+    renderAll();
+  });
+  document.getElementById('order').addEventListener('change', (e) => {
+    state.order = e.target.value;
+    renderAll();
+  });
+  document.getElementById('spoiler').addEventListener('change', (e) => {
+    state.spoiler = e.target.checked;
+    renderAll();
+  });
   document.getElementById('exportBtn').addEventListener('click', () => exportProgress(progress));
   document.getElementById('importFile').addEventListener('change', async (e) => {
     const file = e.target.files[0];

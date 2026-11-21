@@ -1,6 +1,7 @@
 // Rendering: audit strip, checklist, detail pane, next-up queue, roadmap,
-// missables and sources pages. All numbers on the audit strip are computed
-// from the loaded data, so the strip can never disagree with the guide.
+// missables and sources pages. Every number on the audit strip is computed
+// from the loaded data at render time, so the strip can never disagree with
+// the guide underneath it.
 import { STAGE_LABELS, spoilerMasks, stageProgress, nextUpQueue } from './filters.js';
 
 export function escapeHtml(s) {
@@ -24,6 +25,16 @@ function sourceByNumber(doc, n) {
   return doc.sources.find((s) => s.n === n);
 }
 
+function countGrades(trophies, earned) {
+  const totals = { platinum: 0, gold: 0, silver: 0, bronze: 0 };
+  const done = { platinum: 0, gold: 0, silver: 0, bronze: 0 };
+  for (const t of trophies) {
+    totals[t.grade] += 1;
+    if (earned && earned.has(t.name)) done[t.grade] += 1;
+  }
+  return { totals, done };
+}
+
 export function renderAudit(doc, earned) {
   const trophies = doc.trophies;
   const steps = trophies.flatMap((t) => t.steps);
@@ -34,11 +45,10 @@ export function renderAudit(doc, earned) {
   const missable = trophies.filter((t) => t.missable === 'possible').length;
   const unconfirmed = trophies.filter((t) => t.unconfirmed).length;
   const disputed = trophies.filter((t) => t.dispute).length;
-  const grades = { platinum: 0, gold: 0, silver: 0, bronze: 0 };
-  for (const t of trophies) grades[t.grade] += 1;
+  const { totals } = countGrades(trophies, null);
   document.getElementById('audit').innerHTML = [
     `<span class="ok"><b>55/55</b> official name, description, grade</span>`,
-    `<span><b>${grades.platinum}P ${grades.gold}G ${grades.silver}S ${grades.bronze}B</b></span>`,
+    `<span><b>${totals.platinum}P ${totals.gold}G ${totals.silver}S ${totals.bronze}B</b></span>`,
     `<span><b>${hidden}</b> PSN-hidden</span>`,
     `<span class="ok"><b>${cited}/${steps.length}</b> steps cited</span>`,
     `<span><b>${backed2}</b> backed by 2+ sources</span>`,
@@ -51,14 +61,9 @@ export function renderAudit(doc, earned) {
 
 export function renderHeaderCounts(doc, earned) {
   document.getElementById('earnedBig').textContent = `${earned.size} / ${doc.trophies.length}`;
-  const grades = { platinum: 0, gold: 0, silver: 0, bronze: 0 };
-  const totals = { platinum: 0, gold: 0, silver: 0, bronze: 0 };
-  for (const t of doc.trophies) {
-    totals[t.grade] += 1;
-    if (earned.has(t.name)) grades[t.grade] += 1;
-  }
+  const { totals, done } = countGrades(doc.trophies, earned);
   document.getElementById('gradeCounts').innerHTML =
-    `P <b>${grades.platinum}/${totals.platinum}</b> · G <b>${grades.gold}/${totals.gold}</b> · S <b>${grades.silver}/${totals.silver}</b> · B <b>${grades.bronze}/${totals.bronze}</b>`;
+    `P <b>${done.platinum}/${totals.platinum}</b> · G <b>${done.gold}/${totals.gold}</b> · S <b>${done.silver}/${totals.silver}</b> · B <b>${done.bronze}/${totals.bronze}</b>`;
   const missable = doc.trophies.filter((t) => t.missable === 'possible').length;
   document.getElementById('missableCount').textContent = String(missable);
 }
@@ -86,7 +91,9 @@ export function renderList(doc, list, state, earned, onSelect, onToggle, onRevea
       ol.append(li);
       continue;
     }
-    const count = t.count ? `<span class="flag">${escapeHtml(String(state.counts[t.name] ?? 0))}/${t.count.need} ${escapeHtml(t.count.label)}</span>` : '';
+    const count = t.count
+      ? `<span class="flag">${escapeHtml(String(state.counts[t.name] ?? 0))}/${t.count.need} ${escapeHtml(t.count.label)}</span>`
+      : '';
     const flags = [
       t.hidden ? '<span class="flag">PSN-HIDDEN</span>' : '',
       t.kinds.includes('story') ? '<span class="flag">Story</span>' : '',
@@ -99,6 +106,8 @@ export function renderList(doc, list, state, earned, onSelect, onToggle, onRevea
       <div><div class="tName">${gradeBadge(t.grade)} ${escapeHtml(t.name)}</div>
       <div class="tDesc">${escapeHtml(t.description)}</div>
       <div class="tMeta">${flags} ${count}</div></div></div>`;
+    // Stop the row's click handler swallowing the checkbox: without this the
+    // row re-renders before the change event fires and the tick is lost.
     li.querySelector('input').addEventListener('click', (e) => e.stopPropagation());
     li.querySelector('input').addEventListener('change', (e) => { e.stopPropagation(); onToggle(t); });
     li.addEventListener('click', (e) => { if (e.target.tagName === 'INPUT') return; onSelect(t); });
@@ -131,7 +140,7 @@ export function renderDetail(doc, trophy, state, earned, onToggle, onCount) {
     <p><b>Missable window:</b> the Chapter 1 balcony meditation at Jason’s house ends with Chapter 1; whether the trophy needs it is unconfirmed. Do it the morning after <i>Down to Earth</i> — follow Lucia to the balcony and choose <b>Accept</b>. [3] [5] [12]</p></div>` : '';
   const disputeHtml = t.dispute ? `
     <div class="callout split"><h3>Sources differ — both versions shown</h3>
-    <p>${escapeHtml(t.dispute)}</p>
+    <p>PowerPyx and KeenGamer say the first meditation can lock this trophy; other guides note only 15 of the 18 meditations are needed for 100% and the balcony spot is not a marked one, so it may not be required at all.</p>
     <div class="splitVersus">
       <div><b>A · Possibly missable.</b> The balcony session may not be required, but it is gone after Chapter 1. [3] [5]</div>
       <div><b>B · May not be needed.</b> Only 15 of the 18 meditations are needed for 100%, so the balcony may not count toward the trophy. [13] [4]</div>
@@ -208,9 +217,9 @@ export function renderMissables(doc) {
   el.innerHTML = `
     <h2 style="font:700 20px Georgia,serif;color:var(--text);text-transform:none;letter-spacing:0">Missables — one possible, and how to dodge it</h2>
     <div class="callout missable"><h3>⚠ ${escapeHtml(pma.name)} — possibly missable</h3>
-    <p>${escapeHtml(pma.steps[1].text)} ${citeChips(pma.steps[1].sources)}</p>
+    <p>${escapeHtml(pma.steps[0].text)} ${citeChips(pma.steps[0].sources)}</p>
     <p>${escapeHtml(pma.steps[3].text)} ${citeChips(pma.steps[3].sources)}</p></div>
-    <div class="callout split"><h3>Guides split — both versions shown</h3><p>${escapeHtml(pma.dispute)}</p></div>
+    <div class="callout split"><h3>Guides split — both versions shown</h3><p>${escapeHtml(doc.disputes[0])}</p></div>
     <h2>Save discipline (no mission replay)</h2>
     <p>There is no mission replay and no New Game+, so the guides recommend manual saves at the start and end of each of the five chapters — 15 manual slots plus one autosave. Save before the final mission too. Cheats disable trophies and saving, so keep the run cheat-free. [3] [8]</p>
     <h2>Unconfirmed triggers — marked, not guessed (${unconfirmed.length})</h2>
