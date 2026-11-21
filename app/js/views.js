@@ -3,6 +3,7 @@
 // from the loaded data at render time, so the strip can never disagree with
 // the guide underneath it.
 import { STAGE_LABELS, spoilerMasks, stageProgress, nextUpQueue } from './filters.js';
+import { renderRoadmapDetail } from './roadmap-data.js';
 
 export function escapeHtml(s) {
   return String(s)
@@ -208,6 +209,7 @@ export function renderRoadmap(doc, earned) {
       <p class="srcNote">Sources: ${stage.sources.map((n) => `[${n}]`).join(' ')} · Trophies: ${escapeHtml(names)}</p>`;
     wrap.append(card);
   }
+  renderRoadmapDetail();
 }
 
 export function renderMissables(doc) {

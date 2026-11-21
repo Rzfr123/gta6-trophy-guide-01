@@ -1,0 +1,154 @@
+{
+  "guide": "Vice City Ledger — platinum roadmap",
+  "difficulty": "4/10",
+  "difficultySettings": "none — the game has no difficulty setting",
+  "hoursTotal": "~200",
+  "playthroughs": 1,
+  "onlineTrophies": 0,
+  "missionReplay": false,
+  "newGamePlus": false,
+  "saveSlots": 15,
+  "autosaveSlots": 1,
+  "cheats": "cheats disable trophies and saving; play the whole run cheat-free",
+  "totals": {
+    "trophies": 55,
+    "platinum": 1,
+    "gold": 2,
+    "silver": 6,
+    "bronze": 46,
+    "hidden": 28,
+    "chapters": 5,
+    "storyHours": "60–80",
+    "totalHours": "~200"
+  },
+  "missable": {
+    "trophy": "Positive Mental Attitude",
+    "where": "Chapter 1, balcony at Jason's house, the morning after 'Down to Earth'",
+    "what": "Meditate with Lucia, follow her, and choose Accept.",
+    "warning": "This is the only trophy in the game that can lock. Every other trophy stays earnable in free-roam after the story.",
+    "dispute": "Whether the meditation is actually required is unconfirmed: it raises the meditation counter, but it is not a marked meditation spot, and only 15 of the 18 meditations are needed for 100%. Do it anyway — it costs a minute and protects the run.",
+    "saveRule": "Save in a new slot right after the meditation, before continuing Chapter 1."
+  },
+  "saveDiscipline": {
+    "slots": 15,
+    "autosave": 1,
+    "rule": "Save at the start and at the end of each of the five chapters, and before the final mission.",
+    "cheats": "Cheats disable trophies and saving — a cheat entered anywhere in the run poisons that save.",
+    "why": "There is no mission replay and no New Game+, so a manual save is the only way back to an earlier chapter."
+  },
+  "stages": [
+    {
+      "id": 1,
+      "title": "Stage 1 — Play the story, clean and unhurried",
+      "chapters": "Chapters 1–5",
+      "hours": "60–80",
+      "trophies": 5,
+      "goal": "Finish the story in one cheat-free run while protecting the single trophy that can lock.",
+      "pointOfNoReturn": "The Chapter 1 balcony meditation. It only appears the morning after 'Down to Earth'. If you push past that morning without meditating, the moment is gone for this run.",
+      "beforeIt": "Finish 'Down to Earth', sleep until morning, then go straight to the balcony before starting any other mission.",
+      "checklist": [
+        { "label": "Story chapters finished", "target": 5, "unit": "chapters" },
+        { "label": "Manual saves made (start + end of each chapter)", "target": 10, "unit": "saves" },
+        { "label": "Meditations done (running total)", "target": 1, "unit": "of 18" }
+      ],
+      "steps": [
+        "Start a fresh run and never enter a cheat code — cheats switch trophies off for the save.",
+        "Play the story in chapter order; there is no mission replay, so a missed story beat cannot be redone from a menu.",
+        "At the start of Chapter 1, open a fresh manual save slot and keep rotating saves as you go.",
+        "In Chapter 1, the morning after the mission 'Down to Earth', walk out to the balcony at Jason's house and meditate with Lucia.",
+        "When the choice appears during that meditation, follow Lucia and choose Accept.",
+        "Save in a new slot right after the meditation, before you keep playing Chapter 1.",
+        "Keep saving at the start and at the end of every chapter — five chapters, two saves each, inside your 15 manual slots.",
+        "Do not worry about collectibles yet; almost everything stays available in free-roam after the story.",
+        "Save in a fresh slot before the final mission, so you can return to the open world exactly as you left it."
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Stage 2 — The 100% checklist, after the story",
+      "chapters": "Post-story free-roam",
+      "hours": "~50",
+      "trophies": 8,
+      "goal": "Clear the open-world checklist the platinum's 100% requirement is built on.",
+      "pointOfNoReturn": "None in this stage. Free-roam stays open after the story, and every task here can be attempted again.",
+      "beforeIt": "Nothing to protect — but keep one manual save from the end of the story untouched, in case you ever need a clean post-story state.",
+      "checklist": [
+        { "label": "Challenges completed", "target": 70, "unit": "of 80" },
+        { "label": "Vehicles logged", "target": 200, "unit": "of 277" },
+        { "label": "Animals tracked", "target": 100, "unit": "of 255" },
+        { "label": "Meditations completed", "target": 18, "unit": "of 18" },
+        { "label": "Shooting-range golds", "target": 42, "unit": "of 42" },
+        { "label": "Drone races won", "target": 14, "unit": "of 14" },
+        { "label": "Stunts landed", "target": 250, "unit": "of 397" },
+        { "label": "Gang operations cleared", "target": 39, "unit": "operations" }
+      ],
+      "steps": [
+        "Work the 100% checklist in any order — nothing here locks, so pick the nearest task on the map first.",
+        "Finish challenges until you hold 70 of the 80 available; you do not need all 80.",
+        "Photograph and log vehicles until you reach 200 of the 277 in the world.",
+        "Track animals until you reach 100 of the 255 species and encounters.",
+        "Meditate at all 10 meditation locations until the counter reads 18 of 18.",
+        "Earn gold at the shooting ranges until you hold 42 golds across the 12 ranges.",
+        "Win drone races at all 14 drone-race locations.",
+        "Land stunts until the counter reads 250 of the 397 stunts in the world.",
+        "Clear gang operations — 39 of them feed the 100% total."
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Stage 3 — Collectibles, vaults and the long counts",
+      "chapters": "Post-story free-roam",
+      "hours": "~40",
+      "trophies": 31,
+      "goal": "Sweep the collectible sets and the big counters that take the most travelling.",
+      "pointOfNoReturn": "None in this stage. Collectibles stay in the world after the story and can be picked up in any order.",
+      "beforeIt": "No save discipline needed here beyond your normal rotating saves.",
+      "checklist": [
+        { "label": "Card sets completed", "target": 15, "unit": "sets" },
+        { "label": "WAiNK collectibles found", "target": 100, "unit": "of 100" },
+        { "label": "Underwater discoveries", "target": 33, "unit": "of 33" },
+        { "label": "Flamingos found", "target": 100, "unit": "of 100" },
+        { "label": "Bank vaults robbed", "target": 5, "unit": "of 8" }
+      ],
+      "steps": [
+        "Collect card sets until you hold 15 sets — that is the count the 100% checklist asks for.",
+        "Find WAiNK collectibles until the counter reads 100.",
+        "Dive the underwater discoveries until you hold 33 of them.",
+        "Find flamingos until the counter reads 100.",
+        "Rob bank vaults until you have opened 5 of the 8 vaults.",
+        "Pair the travelling with Stage 2 leftovers: a vehicle or animal on the way is still progress.",
+        "Use the in-game map markers and your own checklist — the counters in the tracker pane show your running totals.",
+        "Leave the rarest single items for last, when the map is nearly empty and each remaining marker stands out."
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Stage 4 — Final grind and the platinum",
+      "chapters": "Post-story free-roam",
+      "hours": "~30",
+      "trophies": 11,
+      "goal": "Close out the last counters, verify the checklist, and let the platinum pop.",
+      "pointOfNoReturn": "None — by this stage every remaining trophy is earned in free-roam, and nothing can lock.",
+      "beforeIt": "Keep that fresh save from the step above, so the moment before the platinum is preserved.",
+      "checklist": [
+        { "label": "Challenges at target", "target": 70, "unit": "of 80" },
+        { "label": "Vehicles at target", "target": 200, "unit": "of 277" },
+        { "label": "Animals at target", "target": 100, "unit": "of 255" },
+        { "label": "Meditations at target", "target": 18, "unit": "of 18" },
+        { "label": "Range golds at target", "target": 42, "unit": "of 42" },
+        { "label": "Drone races at target", "target": 14, "unit": "of 14" },
+        { "label": "Vaults at target", "target": 5, "unit": "of 8" },
+        { "label": "Card sets at target", "target": 15, "unit": "sets" }
+      ],
+      "steps": [
+        "Open the tracker and read every counter that is not yet at its target — those are the only jobs left.",
+        "Top up the smallest gaps first: a handful of stunts or a few more challenges is a quick win.",
+        "Re-check the 100% requirements one by one: 70 of 80 challenges, 200 of 277 vehicles, 100 of 255 animals.",
+        "Confirm the meditations sit at 18 of 18, the range golds at 42, the drone races at 14 and the vaults at 5 of 8.",
+        "Confirm the collectibles: 15 card sets, 100 WAiNK, 33 underwater discoveries, 100 flamingos.",
+        "Make a final manual save in a fresh slot before the last trophy you expect to earn.",
+        "Earn the last remaining trophy and watch the platinum — 'Vice Got a Price!' — unlock with it."
+      ]
+    }
+  ]
+}
