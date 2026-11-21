@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vice City Ledger — GTA VI Trophy Guide &amp; Tracker</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><span class="mark" aria-hidden="true">VL</span>
+    <div><h1>Vice City Ledger</h1>
+    <p class="sub">GTA VI · PS5 · 55 trophies · every step cited · works offline</p></div>
+  </div>
+  <div class="earned"><span id="earnedBig" class="big">0 / 55</span><span class="earnedLabel">earned</span>
+    <span id="gradeCounts" class="grades"></span></div>
+  <div class="topActions">
+    <label class="shield"><input id="spoiler" type="checkbox" checked> Spoiler shield</label>
+    <button id="exportBtn" type="button">Export</button>
+    <label class="importBtn">Import <input id="importFile" type="file" accept="application/json,.json"></label>
+    <span class="saved">✓ Saved in this browser</span>
+  </div>
+</header>
+
+<section id="audit" class="audit" aria-label="Audit"></section>
+
+<nav class="tabs" aria-label="Sections">
+  <button type="button" data-tab="tracker" class="active">Tracker</button>
+  <button type="button" data-tab="roadmap">Roadmap</button>
+  <button type="button" data-tab="missables">Missables <span id="missableCount" class="pill">1</span></button>
+  <button type="button" data-tab="sources">Sources</button>
+</nav>
+
+<div id="filterBar" class="filters">
+  <button type="button" data-kind="all" class="active">All <b>55</b></button>
+  <button type="button" data-kind="story">Story <b>12</b></button>
+  <button type="button" data-kind="missable">Missable <b>1</b></button>
+  <button type="button" data-kind="collectibles">Collectibles <b>7</b></button>
+  <button type="button" data-kind="activities">Activities <b>35</b></button>
+  <button type="button" data-kind="online">Online <b>0</b></button>
+  <button type="button" data-kind="hidden">PSN-hidden <b>28</b></button>
+  <button type="button" data-kind="disputed">Disputed <b>1</b></button>
+  <button type="button" data-kind="unconfirmed">Unconfirmed <b>6</b></button>
+  <button type="button" data-kind="notearned">Not earned</button>
+  <span class="gradeFilter" role="group" aria-label="Grade">
+    <button type="button" data-grade="platinum" title="Platinum">P</button>
+    <button type="button" data-grade="gold" title="Gold">G</button>
+    <button type="button" data-grade="silver" title="Silver">S</button>
+    <button type="button" data-grade="bronze" title="Bronze">B</button>
+  </span>
+  <input id="search" type="search" placeholder="Search name, mission, step…" aria-label="Search trophies">
+</div>
+
+<main>
+  <section id="view-tracker" class="view trackerView">
+    <aside class="listCol">
+      <div class="listHead"><span id="shownCount">55 shown</span>
+        <label>Order <select id="order"><option value="roadmap">Roadmap order</option><option value="grade">Grade</option><option value="name">Name A–Z</option></select></label>
+      </div>
+      <ol id="trophyList" class="trophyList"></ol>
+    </aside>
+    <article id="detail" class="detailCol" aria-live="polite"></article>
+    <aside class="railCol">
+      <section class="railBox"><h2>Next up · roadmap order</h2><ol id="nextUp" class="nextUp"></ol></section>
+      <section class="railBox"><h2 id="railSourcesTitle">Sources for this guide</h2><ol id="railSources" class="railSources"></ol></section>
+    </aside>
+  </section>
+
+  <section id="view-roadmap" class="view" hidden>
+    <div class="roadmapIntro">
+      <h2>Road to the platinum — about 200 hours</h2>
+      <p><b>Difficulty 4/10</b> · <b>~200 hours</b> · <b>1 playthrough</b> · <b>0 online trophies</b> · <b>no difficulty settings</b> · <b>cheats disable trophies</b>. Built from the official descriptions and the published guides below; every stage cites its sources.</p>
+    </div>
+    <div id="roadmapStages" class="roadmapStages"></div>
+  </section>
+
+  <section id="view-missables" class="view" hidden>
+    <div id="missablesBody" class="missablesBody"></div>
+  </section>
+
+  <section id="view-sources" class="view" hidden>
+    <div id="sourcesBody" class="sourcesBody"></div>
+  </section>
+</main>
+
+<footer class="foot">
+  <p>Official trophy names, descriptions and grades as PlayStation publishes them (Exophase / PSNProfiles, frozen 18 Nov 2026). Every guide step is written for this ledger in our own words and cites its source beside it. No Rockstar logo or artwork. Hidden flags follow PSNProfiles’ list of 28 hidden trophies; the 27 visible ones are those PSN shows from the start. Read 21 Nov 2026.</p>
+</footer>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
